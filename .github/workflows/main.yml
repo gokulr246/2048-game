@@ -1,4 +1,5 @@
 name: Build and Push to Azure Container Registry
+
 on:
   push:
     branches:
@@ -21,8 +22,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t 2048-game/mydockerimage:latest .
-        docker tag mydockerimage:latest ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
+        docker build -t 2048-game/mydockerimage:latest ./2048-game
+        docker tag 2048-game/mydockerimage:latest ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
 
     - name: Push image to Azure Container Registry
       run: |
