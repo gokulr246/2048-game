@@ -1,0 +1,30 @@
+name: Build and Push to Azure Container Registry
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_REGISTRY }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t 2048-game/mydockerimage:latest .
+        docker tag mydockerimage:latest ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
+
+    - name: Push image to Azure Container Registry
+      run: |
+        docker push ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
