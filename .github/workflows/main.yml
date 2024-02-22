@@ -30,11 +30,11 @@ jobs:
     - name: Build and Push Docker image
       run: |
           IMAGE_TAG_SUFFIX=""
-          if [ ${{ github.ref == 'refs/heads/main' }} ]; then
+          if [ "${{ github.ref }}" = "refs/heads/main" }} ]; then
             IMAGE_TAG_SUFFIX="prod.0."
-          elif [ ${{ github.ref == 'refs/heads/dev' }} ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/dev"' }} ]; then
             IMAGE_TAG_SUFFIX="dev.0."
-          elif [ ${{ github.ref == 'refs/heads/sit' }} ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/sit" }} ]; then
             IMAGE_TAG_SUFFIX="sit.0."
           fi
           IMAGE_TAG=${{ github.sha }}
