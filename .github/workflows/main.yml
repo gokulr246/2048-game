@@ -38,8 +38,8 @@ jobs:
             IMAGE_TAG_SUFFIX="sit.0."
           fi
           IMAGE_TAG=${{ github.sha }}
-          docker build -t mgcbe.azurecr.io/talent-mgmt-fe:${IMAGE_TAG_SUFFIX}${IMAGE_TAG} ./2048-game
-          docker push mgcbe.azurecr.io/talent-mgmt-fe:${IMAGE_TAG_SUFFIX}${IMAGE_TAG}
+          docker build -t ${{ secrets.ACR_REGISTRY }}/mydockerimage:${IMAGE_TAG_SUFFIX}${IMAGE_TAG} ./2048-game
+          docker push ${{ secrets.ACR_REGISTRY }}/mydockerimage:${IMAGE_TAG_SUFFIX}${IMAGE_TAG}
  
     # - name: Push image to Azure Container Registry
     #   run: |
