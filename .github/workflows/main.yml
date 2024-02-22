@@ -22,25 +22,16 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    # - name: Build Docker image
-    #   run: |
-    #     docker build -t 2048-game/mydockerimage:latest ./2048-game
-    #     docker tag 2048-game/mydockerimage:latest ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
-
     - name: Build and Push Docker image
       run: |
           IMAGE_TAG_SUFFIX=""
-          if [ "${{ github.ref }}" = "refs/heads/main" }} ]; then
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             IMAGE_TAG_SUFFIX="prod.0."
-          elif [ "${{ github.ref }}" = "refs/heads/dev"' }} ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/dev" ]; then
             IMAGE_TAG_SUFFIX="dev.0."
-          elif [ "${{ github.ref }}" = "refs/heads/sit" }} ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/sit" ]; then
             IMAGE_TAG_SUFFIX="sit.0."
           fi
           IMAGE_TAG=${{ github.sha }}
           docker build -t devsitprod.azurecr.io/mydockerimage:${IMAGE_TAG_SUFFIX}${IMAGE_TAG} ./2048-game
           docker push devsitprod.azurecr.io/mydockerimage:${IMAGE_TAG_SUFFIX}${IMAGE_TAG}
- 
-    # - name: Push image to Azure Container Registry
-    #   run: |
-    #     docker push ${{ secrets.ACR_REGISTRY }}/mydockerimage:latest
